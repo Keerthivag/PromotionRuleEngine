@@ -30,7 +30,7 @@ public class PriceCalculatorServiceTest {
 		List<Product> products = new ArrayList<>(Arrays.asList(productA, productB, productC, productD));
 		Assert.assertEquals(110, priceCalculatorService.calculateProductPrice(products));
 	}
-	
+
 	@Test(expected = ProductEmptyException.class)
 	public void testCalculateProductPriceWhenProductIsEmpty() {
 		priceCalculatorService.calculateProductPrice(Collections.emptyList());
