@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ public class PriceCalculatorServiceTest {
 		Product productC = new Product("C", 20);
 		Product productD = new Product("D", 15);
 		List<Product> products = new ArrayList<>(Arrays.asList(productA, productB, productC, productD));
-		priceCalculatorService.calculateProductPrice(products);
+		Assert.assertEquals(110, priceCalculatorService.calculateProductPrice(products));
 	}
 
 }
