@@ -2,6 +2,8 @@ package com.promotion.checkout;
 
 import java.util.List;
 
+import com.promotion.checkout.domain.Product;
+
 public class PriceCalculatorServiceImpl implements PriceCalculatorService {
 
 	@Override

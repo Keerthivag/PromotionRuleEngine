@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.promotion.domain.Product;
+import com.promotion.checkout.domain.Product;
 
 public class PriceCalculatorServiceTest {
 
