@@ -20,7 +20,7 @@ public class PriceCalculatorServiceTest {
 	}
 
 	@Test
-	public void testCalculateProductPrice() {
+	public void testCalculateProductPriceWhenValidProducts() {
 		Product productA = new Product("A", 50);
 		Product productB = new Product("B", 30);
 		Product productC = new Product("C", 20);
