@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.promotion.checkout.domain.Product;
+import com.promotion.checkout.exception.ProductEmptyException;
 
 public class PriceCalculatorServiceTest {
 
@@ -32,7 +33,7 @@ public class PriceCalculatorServiceTest {
 	
 	@Test(expected = ProductEmptyException.class)
 	public void testCalculateProductPriceWhenProductIsEmpty() {
-		Assert.assertEquals(110, priceCalculatorService.calculateProductPrice(Collections.emptyList()));
+		priceCalculatorService.calculateProductPrice(Collections.emptyList());
 	}
 
 }
