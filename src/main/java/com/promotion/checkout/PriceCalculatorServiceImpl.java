@@ -38,6 +38,8 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
 					totalPrice.getAndAdd((skuIdOfD - skuIdOfC) * prodPrice);
 				}
 			}
+			products.removeIf(
+					(Product p) -> p.getSkuId().equalsIgnoreCase(skuIdC) || p.getSkuId().equalsIgnoreCase(skuIdD));
 
 			products.stream().collect(Collectors.groupingBy(Product::getSkuId)).forEach((skuId, prods) -> {
 				int skuIdQty = prods.size();
