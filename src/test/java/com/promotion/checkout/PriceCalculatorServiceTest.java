@@ -8,14 +8,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.promotion.checkout.domain.Product;
 import com.promotion.checkout.exception.ProductEmptyException;
 
-import junitparams.JUnitParamsRunner;
-
-@RunWith(JUnitParamsRunner.class)
 public class PriceCalculatorServiceTest {
 
 	private PriceCalculatorService priceCalculatorService;
