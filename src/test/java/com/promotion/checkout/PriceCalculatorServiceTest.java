@@ -2,6 +2,7 @@ package com.promotion.checkout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -27,6 +28,11 @@ public class PriceCalculatorServiceTest {
 		Product productD = new Product("D", 15);
 		List<Product> products = new ArrayList<>(Arrays.asList(productA, productB, productC, productD));
 		Assert.assertEquals(110, priceCalculatorService.calculateProductPrice(products));
+	}
+	
+	@Test(expected = ProductEmptyException.class)
+	public void testCalculateProductPriceWhenProductIsEmpty() {
+		Assert.assertEquals(110, priceCalculatorService.calculateProductPrice(Collections.emptyList()));
 	}
 
 }
