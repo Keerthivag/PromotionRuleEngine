@@ -1,6 +1,7 @@
 package com.promotion.checkout;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import com.promotion.checkout.domain.Product;
@@ -12,29 +13,29 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
 
 	@Override
 	public int calculateProductPrice(List<Product> products) {
-		int totalPrice = 0;
+		AtomicInteger totalPrice = new AtomicInteger(0);
 		if (null == products || products.isEmpty()) {
 			throw new ProductEmptyException("Product List is empty");
 		} else {
-			String skuIdC = ProductPrice.A.name();
-			String skuIdD = ProductPrice.A.name();
+			String skuIdC = ProductPrice.C.name();
+			String skuIdD = ProductPrice.D.name();
 
-			long skuIdOfC = products.stream().filter(prod -> prod.getSkuId().equalsIgnoreCase(skuIdC)).count();
-			long skuIdOfD = products.stream().filter(prod -> prod.getSkuId().equalsIgnoreCase(skuIdD)).count();
+			int skuIdOfC = (int) products.stream().filter(prod -> prod.getSkuId().equalsIgnoreCase(skuIdC)).count();
+			int skuIdOfD = (int) products.stream().filter(prod -> prod.getSkuId().equalsIgnoreCase(skuIdD)).count();
 
 			if (skuIdOfC == skuIdOfD) {
 				int promotionPrice = PromotionPrice.CD.getPrice();
-				totalPrice += skuIdOfD * promotionPrice;
+				totalPrice.getAndAdd(skuIdOfD * promotionPrice);
 			} else {
-				long minCOrD = Math.min(skuIdOfC, skuIdOfD);
+				int minCOrD = Math.min(skuIdOfC, skuIdOfD);
 				int promotionPrice = PromotionPrice.CD.getPrice();
-				totalPrice += minCOrD * promotionPrice;
+				totalPrice.getAndAdd(minCOrD * promotionPrice);
 				if (skuIdOfC > skuIdOfD) {
 					int prodPrice = ProductPrice.valueOf(skuIdC).getPrice();
-					totalPrice += (skuIdOfC - skuIdOfD) * prodPrice;
+					totalPrice.getAndAdd((skuIdOfC - skuIdOfD) * prodPrice);
 				} else {
 					int prodPrice = ProductPrice.valueOf(skuIdD).getPrice();
-					totalPrice += (skuIdOfD - skuIdOfC) * prodPrice;
+					totalPrice.getAndAdd((skuIdOfD - skuIdOfC) * prodPrice);
 				}
 			}
 
@@ -44,13 +45,13 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
 					int prodPrice = ProductPrice.valueOf(skuId).getPrice();
 					int totalQty = PromotionPrice.valueOf(skuId).getQty();
 					int offerprice = PromotionPrice.valueOf(skuId).getPrice();
-					totalPrice += (skuIdQty / totalQty) * offerprice + (skuIdQty % totalQty * prodPrice);
+					totalPrice.getAndAdd((skuIdQty / totalQty) * offerprice + (skuIdQty % totalQty * prodPrice));
 				} else {
-					totalPrice += products.stream().collect(Collectors.summingInt(Product::getPrice));
+					totalPrice.getAndAdd(products.stream().collect(Collectors.summingInt(Product::getPrice)));
 				}
 			});
 		}
-		return totalPrice;
+		return totalPrice.get();
 	}
 
 }
