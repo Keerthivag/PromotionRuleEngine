@@ -64,6 +64,13 @@ public class PriceCalculatorServiceTest {
 				Arrays.asList(productA, productA, productA, productB, productB));
 		Assert.assertEquals(175, priceCalculatorService.calculateProductPrice(products));
 	}
+	
+	@Test
+	public void testCalculateProductPriceForFirstScenario () {
+		List<Product> products = new ArrayList<>(
+				Arrays.asList(productA, productB, productC));
+		Assert.assertEquals(100, priceCalculatorService.calculateProductPrice(products));
+	}
 
 	@Test(expected = ProductEmptyException.class)
 	public void testCalculateProductPriceWhenProductIsEmpty() {
