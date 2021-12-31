@@ -14,7 +14,7 @@ public class PriceCalculatorServiceTest {
 	
 	@Test
 	public void testCalculateProductPrice() {
-		
+		priceCalculatorService.calculateProductPrice();
 	}
 	
 
